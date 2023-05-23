@@ -28,4 +28,4 @@ app.UseAuthorization();
 app.UseMiddleware<WingsTokenMiddleware>();
 app.MapControllers();
 
-app.Run();
+app.Run("http://0.0.0.0:8081");
