@@ -14,7 +14,7 @@ public class MetricsService
     public async Task<string> GetCpuModel()
     {
         return await BashHelper
-            .ExecuteCommand("cat /proc/cpuinfo | grep \"model name\" | uniq | awk -F: '{print $2}' | sed 's/^ //'");
+            .ExecuteCommand("lscpu | grep 'Model name' | awk -F: '{print $2}' | sed 's/^ *//'");
     }
 
     public async Task<double> GetCpuUsage()
@@ -29,7 +29,7 @@ public class MetricsService
     {
         return long.Parse(
             await BashHelper
-                .ExecuteCommand("free -b | grep \"Mem:\" | awk '{print $3}'")
+                .ExecuteCommand("grep 'MemFree:' /proc/meminfo | awk '{print $2}'")
         );
     }
 
@@ -37,7 +37,7 @@ public class MetricsService
     {
         return long.Parse(
             await BashHelper
-                .ExecuteCommand("free -b | grep \"Mem:\" | awk '{print $2}'")
+                .ExecuteCommand("grep 'MemTotal:' /proc/meminfo | awk '{print $2}'")
         );
     }
 
